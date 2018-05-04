@@ -6,41 +6,23 @@
 
  :nrepl        {:port 3333} ; <- (1)
                ; :middleware [] ; <- optional
- ;        :app is called by npm/yarn's 'dev' command in package.json
- :builds {:app {:target :browser
-                :output-dir "public/js"
-                :asset-path "js"
-                :modules {:main {:entries [starter.core]}}
-                :devtools {:before-load starter.core/stop
-                           :after-load starter.core/start
-                           :http-root "public"
-                           :http-port 8020}}}}
 
-
-; (1) = setup from other starter (protorepl):
-
-; {:source-paths ["src"]
-;
-;;  had trouble with this https://github.com/jacekschae/shadow-reagent/issues/2
-;  :jvm-opts ["--add-modules" "java.xml.bind"]
-;
-;  :dependencies [[binaryage/devtools "0.9.10"] <- https://github.com/binaryage/cljs-devtools
-;                 [proto-repl "0.3.1"]
-;                 [reagent "0.8.0"]]
-;
-;  :nrepl        {:port 3333}
-;
-;  :builds
-;  {:app {:target :browser
-;         :output-dir "public/js"
-;         :asset-path "/js"
-;
-;         :modules
-;         {:main
-;          {:entries [app.core]}}
-;
-;         :devtools
-;         {:after-load  app.core/main
-;          :http-root   "public"
-;          :http-port   3000
-;          :preloads    [shadow.cljs.devtools.client.hud]}}}}
+ :builds
+ {:app
+ ; browser: https://shadow-cljs.github.io/docs/UsersGuide.html#target-browser
+ ; For example: if your web server will serve the folder public/x when asked for the URI /x,
+ ; and your :output-dir for a module is public/assets/app/js then your :asset-path should be
+ ; /assets/app/js. You are not required to use an absolute asset path, but it is highly recommended.
+  {:target :browser
+   :output-dir "public/js" ; Directory to use for all compiler output (entry js files)
+   :asset-path "js" ; Relative path from * web server’s root * to resources in :output-dir.
+   :modules ; a map keyed by ID used to generate the .js filename. Used for code-splitting.
+   {:main ; Module :main => main.js in :output-dir.
+    {:entries [starter.core]}} ; namespaces => root nodes of dep. graph for output code of this module.
+     ; see link above for more goodies available here!
+   :devtools ; for configuring optional dev-time HTTP server for a build and CSS (browser) reloading.
+   {:before-load starter.core/stop ; symbol (w/a syncr. function namespace) run just before recompiled file refresh
+    :after-load starter.core/start ; symbol (with namespace) of a function to run after hot code reload is complete.
+    :http-root "public" ; disk path from which to serve root filesystem requests.
+    :http-port 8020}}}} ; The port to serve from.
+     ; see link above for more goodies available here!
