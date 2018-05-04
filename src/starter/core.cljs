@@ -2,7 +2,7 @@
     (:require [reagent.core :as r]))
 
 (defonce greeting "hello")
-(def who "world")
+(def who "shadow!")
 
 (defn app []
   [:div greeting " " who])
