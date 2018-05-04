@@ -7,6 +7,18 @@
 (defn app []
   [:div greeting " " who])
 
+; let's play with the js interop functionality and the REPL!
+
+(js/console.log "Hey from proto-repl!")
+
+(r/render [:div "NEW DIV BABY"
+           [:div "and another!"]]
+          (.getElementById js/document "app"))
+
+(js/alert "foo")
+
+; ok, enough monkey business :)
+
 (defn stop []
   (js/console.log "Stopping..."))
 

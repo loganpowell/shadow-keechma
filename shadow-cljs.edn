@@ -1,11 +1,12 @@
 {:source-paths ["src"]
 
- :dependencies [;[binaryage/devtools "0.9.10"] ; <- (1)
+ :dependencies [;[binaryage/devtools "0.9.10"] ; <- (1) optional
                 [proto-repl "0.3.1"]
                 [reagent "0.8.0-alpha2"]]
 
  :nrepl        {:port 3333} ; <- (1)
-
+               ; :middleware [] ; <- optional
+ ;        :app is called by npm/yarn's 'dev' command in package.json
  :builds {:app {:target :browser
                 :output-dir "public/js"
                 :asset-path "js"
