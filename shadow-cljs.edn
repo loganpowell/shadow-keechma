@@ -1,6 +1,10 @@
 {:source-paths ["src"]
 
- :dependencies [[reagent "0.8.0-alpha2"]]
+ :dependencies [;[binaryage/devtools "0.9.10"] ; <- (1)
+                [proto-repl "0.3.1"]
+                [reagent "0.8.0-alpha2"]]
+
+ :nrepl        {:port 3333} ; <- (1)
 
  :builds {:app {:target :browser
                 :output-dir "public/js"
@@ -10,3 +14,32 @@
                            :after-load starter.core/start
                            :http-root "public"
                            :http-port 8020}}}}
+
+
+; (1) = setup from other starter (protorepl):
+
+; {:source-paths ["src"]
+;
+;;  had trouble with this https://github.com/jacekschae/shadow-reagent/issues/2
+;  :jvm-opts ["--add-modules" "java.xml.bind"]
+;
+;  :dependencies [[binaryage/devtools "0.9.10"] <- https://github.com/binaryage/cljs-devtools
+;                 [proto-repl "0.3.1"]
+;                 [reagent "0.8.0"]]
+;
+;  :nrepl        {:port 3333}
+;
+;  :builds
+;  {:app {:target :browser
+;         :output-dir "public/js"
+;         :asset-path "/js"
+;
+;         :modules
+;         {:main
+;          {:entries [app.core]}}
+;
+;         :devtools
+;         {:after-load  app.core/main
+;          :http-root   "public"
+;          :http-port   3000
+;          :preloads    [shadow.cljs.devtools.client.hud]}}}}
